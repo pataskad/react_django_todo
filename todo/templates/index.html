@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>React To Do</title>
+        {% load static %}
+        <link rel="favicon" type="image/jpg" href="{ static 'todo\static\img\faviconio-logo\logo.png'}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+    </head>
+    
+    <body>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+        <h1>This is a React ToDo project!</h1>
+        <!--React will render to the div 'myToDo' below-->
+        <div id="myToDo"></div>
+        <!--React components starting here-->
+        <script type="text/babel">
+        class ToDo extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    input: '',
+                    toDoList: []
+                }
+                {/*bind submit and change functions to the ToDo component to access 'this'*/}
+                this.handleSubmit = this.handleSubmit.bind(this);
+                this.handleChange = this.handleChange.bind(this);
+            }
+            // declare handleSubmit and handleChange functions here before render(), pure javascript!
+            // sets the input equal to value submitted
+            handleChange(e) {
+                this.setState({
+                    input: e.target.value
+                });
+            }
+            // creates a new toDoList item at each ',' aka it's own separate item
+            handleSubmit() {
+                const arrayList = this.state.input.split(',');
+                this.setState({
+                    toDoList: arrayList
+                })
+            }
+            render() {
+                // sets each item within toDoList's array to the variable listItems for simpler use within render below
+                listItems = this.state.toDoList.map(i => <li>{i}</li>);
+                return (
+                    // div below is what will render when the component is rendered to the DOM, functions declared above handle dynamic/moving operations
+                    <div>
+                        <input onChange={this.handleChange} value={this.state.input} placeholder="What do I need to do?"></input>
+                        <button onClick={this.handleSubmit}>Add</button>
+                        <h2>Today's To Do:</h2>
+                        <ol>{listItems}</ol>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<ToDo />, document.getElementById('myToDo'));
+        </script>
+
+
+
+
+
+
+
+
+    </body>
+</html>
