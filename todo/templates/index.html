@@ -10,10 +10,11 @@
     </head>
     
     <body>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 
-        <h1>This is a React ToDo project!</h1>
+        <h1>This is a simple React ToDo project!</h1>
         <!--React will render to the div 'myToDo' below-->
         <div id="myToDo"></div>
         <!--React components starting here-->
@@ -40,24 +41,25 @@
             handleSubmit() {
                 const arrayList = this.state.input.split(',');
                 this.setState({
-                    toDoList: arrayList
-                })
+                    toDoList: arrayList,
+                    input: ''
+                });
             }
             render() {
                 // sets each item within toDoList's array to the variable listItems for simpler use within render below
-                listItems = this.state.toDoList.map(i => <li>{i}</li>);
+                const listItems = this.state.toDoList.map(i => <li>{i}</li>);
                 return (
                     // div below is what will render when the component is rendered to the DOM, functions declared above handle dynamic/moving operations
                     <div>
-                        <input onChange={this.handleChange} value={this.state.input} placeholder="What do I need to do?"></input>
+                        <input onChange={this.handleChange} value={this.state.input} placeholder="You must separate each task with a comma!"></input>
                         <button onClick={this.handleSubmit}>Add</button>
-                        <h2>Today's To Do:</h2>
+                        <h2>Today's To Do:</h2><hr></hr>
                         <ol>{listItems}</ol>
                     </div>
                 );
             }
-        }
-        ReactDOM.render(<ToDo />, document.getElementById('myToDo'));
+        };
+        ReactDOM.render(<ToDo />, document.getElementById("myToDo"));
         </script>
 
 
